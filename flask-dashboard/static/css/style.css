@@ -1,0 +1,27 @@
+body {
+    font-family: Arial;
+    background-color: #0f172a;
+    color: white;
+}
+
+nav {
+    background-color: #1e293b;
+    padding: 10px;
+}
+
+a {
+    color: #38bdf8;
+    margin-right: 10px;
+}
+
+.container {
+    padding: 20px;
+}
+
+button {
+    padding: 10px;
+    background-color: #3b82f6;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
