@@ -2,22 +2,43 @@
 
 {% block content %}
 
-<div style="width: 600px;">
-    <h2 style="text-align:center;">📊 Case Dashboard</h2>
+<div class="dashboard-container">
+
+    <h2 class="dashboard-title">🧠 Threat Analysis Dashboard</h2>
 
     {% if cases %}
         {% for case in cases %}
-        <div class="card">
-            <h3>{{ case.case_name }}</h3>
-            <p>User: {{ case.user_name }}</p>
-            <p>Case ID: {{ case.case_id }}</p>
-            <p>Hash: {{ case.dump_hash }}</p>
-            <p>File: {{ case.filename }}</p>
+
+        <!-- 🔴 HIGH THREAT ALERT -->
+        {% if case.severity == "High" %}
+        <div class="alert high-alert">
+            🚨 HIGH THREAT DETECTED
         </div>
+        {% endif %}
+
+        <div class="card animate-card {{ case.severity|lower }}-card">
+
+            <h3>{{ case.case_name }}</h3>
+
+            <p>👤 {{ case.user_name }}</p>
+            <p>🆔 {{ case.case_id }}</p>
+            <p>🔐 {{ case.dump_hash }}</p>
+            <p>📁 {{ case.filename }}</p>
+
+            <p>
+              Severity:
+              <span class="badge {{ case.severity|lower }}">
+                {{ case.severity }}
+              </span>
+            </p>
+
+        </div>
+
         {% endfor %}
     {% else %}
         <p>No cases yet</p>
     {% endif %}
+
 </div>
 
 {% endblock %}

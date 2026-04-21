@@ -164,3 +164,39 @@ button:active {
     color: white;
     width: 100%;
 }
+
+/* ALERT BANNER */
+.alert {
+    padding: 12px;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    text-align: center;
+    font-weight: bold;
+}
+
+/* HIGH ALERT */
+.high-alert {
+    background: #ef4444;
+    color: white;
+    animation: pulse 1s infinite;
+}
+
+/* PULSE ANIMATION */
+@keyframes pulse {
+    0% { box-shadow: 0 0 5px #ef4444; }
+    50% { box-shadow: 0 0 20px #ef4444; }
+    100% { box-shadow: 0 0 5px #ef4444; }
+}
+
+/* CARD COLORS */
+.high-card {
+    border-left: 4px solid #ef4444;
+}
+
+.medium-card {
+    border-left: 4px solid #f59e0b;
+}
+
+.low-card {
+    border-left: 4px solid #22c55e;
+}
