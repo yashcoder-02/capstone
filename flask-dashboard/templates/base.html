@@ -6,13 +6,15 @@
 </head>
 <body>
 
-<nav>
-    <h2>🧠 Memory Forensics</h2>
-    <a href="/">Upload</a>
-    <a href="/dashboard">Dashboard</a>
+<nav class="navbar">
+    <h2>🧠 Forensics Dashboard</h2>
+    <div>
+        <a href="/">Upload</a>
+        <a href="/dashboard">Dashboard</a>
+    </div>
 </nav>
 
-<div class="container">
+<div class="main-wrapper">
     {% block content %}{% endblock %}
 </div>
 

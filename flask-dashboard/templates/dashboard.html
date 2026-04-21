@@ -1,16 +1,23 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h2>Dashboard</h2>
 
-{% if files %}
-    <ul>
-    {% for file in files %}
-        <li>{{ file }}</li>
-    {% endfor %}
-    </ul>
-{% else %}
-    <p>No uploaded files yet</p>
-{% endif %}
+<div style="width: 600px;">
+    <h2 style="text-align:center;">📊 Case Dashboard</h2>
+
+    {% if cases %}
+        {% for case in cases %}
+        <div class="card">
+            <h3>{{ case.case_name }}</h3>
+            <p>User: {{ case.user_name }}</p>
+            <p>Case ID: {{ case.case_id }}</p>
+            <p>Hash: {{ case.dump_hash }}</p>
+            <p>File: {{ case.filename }}</p>
+        </div>
+        {% endfor %}
+    {% else %}
+        <p>No cases yet</p>
+    {% endif %}
+</div>
 
 {% endblock %}
