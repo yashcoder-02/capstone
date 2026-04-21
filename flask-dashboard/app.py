@@ -4,14 +4,27 @@ from flask import Flask, render_template, request, redirect
 
 app = Flask(__name__)
 
-# Set base directory
+# ------------------ Base Setup ------------------
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
-# Upload folder setup
+# Upload folder
 UPLOAD_FOLDER = os.path.join(BASE_DIR, "uploads")
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
 app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
+
+
+# ------------------ Severity Logic ------------------
+def calculate_severity(case_id, dump_hash):
+    case_id = case_id or ""
+    dump_hash = dump_hash or ""
+
+    if "mal" in case_id.lower() or "bad" in dump_hash.lower():
+        return "High"
+    elif len(dump_hash) > 10:
+        return "Medium"
+    else:
+        return "Low"
 
 
 # ------------------ Upload Route ------------------
@@ -20,13 +33,20 @@ def upload():
     if request.method == 'POST':
         file = request.files['file']
 
-        # Collect form data
+        case_id = request.form.get('case_id')
+        dump_hash = request.form.get('dump_hash')
+
+        # Calculate severity
+        severity = calculate_severity(case_id, dump_hash)
+
+        # Case data
         case_data = {
             "case_name": request.form.get('case_name'),
             "user_name": request.form.get('user_name'),
-            "case_id": request.form.get('case_id'),
-            "dump_hash": request.form.get('dump_hash'),
-            "filename": file.filename if file else ""
+            "case_id": case_id,
+            "dump_hash": dump_hash,
+            "filename": file.filename if file else "",
+            "severity": severity
         }
 
         # Save file
@@ -34,7 +54,7 @@ def upload():
             filepath = os.path.join(app.config["UPLOAD_FOLDER"], file.filename)
             file.save(filepath)
 
-        # Save case data to JSON
+        # Save to JSON
         cases_file = os.path.join(BASE_DIR, "cases.json")
 
         if os.path.exists(cases_file):
@@ -51,9 +71,16 @@ def upload():
         with open(cases_file, "w") as f:
             json.dump(cases, f, indent=4)
 
-        return redirect('/dashboard')
+        # 🔥 Redirect to processing page instead of dashboard
+        return redirect('/processing')
 
     return render_template('upload.html')
+
+
+# ------------------ Processing Route ------------------
+@app.route('/processing')
+def processing():
+    return render_template('processing.html')
 
 
 # ------------------ Dashboard Route ------------------
@@ -63,7 +90,10 @@ def dashboard():
 
     if os.path.exists(cases_file):
         with open(cases_file, "r") as f:
-            cases = json.load(f)
+            try:
+                cases = json.load(f)
+            except:
+                cases = []
     else:
         cases = []
 

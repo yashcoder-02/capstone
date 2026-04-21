@@ -3,20 +3,40 @@
 {% block content %}
 
 <div class="form-card">
+
     <h2>📂 Create Case</h2>
+    <p class="subtitle">Upload memory dump for forensic analysis</p>
 
     <form method="POST" enctype="multipart/form-data">
 
-        <input type="text" name="case_name" placeholder="Case Name" required>
-        <input type="text" name="user_name" placeholder="User Name" required>
-        <input type="text" name="case_id" placeholder="Case ID" required>
-        <input type="text" name="dump_hash" placeholder="Dump Hash" required>
+        <div class="input-group">
+            <span>📁</span>
+            <input type="text" name="case_name" placeholder="Case Name" required>
+        </div>
+
+        <div class="input-group">
+            <span>👤</span>
+            <input type="text" name="user_name" placeholder="User Name" required>
+        </div>
+
+        <div class="input-group">
+            <span>🆔</span>
+            <input type="text" name="case_id" placeholder="Case ID" required>
+        </div>
+
+        <div class="input-group">
+            <span>🔐</span>
+            <input type="text" name="dump_hash" placeholder="Dump Hash" required>
+        </div>
 
         <input type="file" name="file" required>
 
         <button type="submit">Upload & Analyze</button>
 
     </form>
+
+    <p class="footer-text">🔒 Secure forensic processing</p>
+
 </div>
 
 {% endblock %}

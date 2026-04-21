@@ -89,3 +89,78 @@ button:hover {
     margin-bottom: 20px;
     border-left: 4px solid #3b82f6;
 }
+
+/* ---------- SUBTITLE ---------- */
+.subtitle {
+    text-align: center;
+    font-size: 13px;
+    color: #94a3b8;
+    margin-bottom: 20px;
+}
+
+/* ---------- FOOTER TEXT ---------- */
+.footer-text {
+    text-align: center;
+    font-size: 12px;
+    margin-top: 15px;
+    color: #64748b;
+}
+
+/* ---------- GLOW EFFECT ---------- */
+body::before {
+    content: "";
+    position: absolute;
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(circle, rgba(59,130,246,0.2), transparent);
+    top: 20%;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: -1;
+}
+
+/* ---------- CARD HOVER ANIMATION ---------- */
+.form-card {
+    transition: all 0.3s ease;
+}
+
+.form-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 40px rgba(0,0,0,0.8);
+}
+
+/* ---------- INPUT FOCUS EFFECT ---------- */
+input:focus {
+    outline: none;
+    border: 1px solid #3b82f6;
+    box-shadow: 0 0 5px rgba(59,130,246,0.5);
+}
+
+/* ---------- BUTTON ACTIVE EFFECT ---------- */
+button:active {
+    transform: scale(0.98);
+}
+
+/* INPUT WITH ICON */
+.input-group {
+    display: flex;
+    align-items: center;
+    background: #020617;
+    border: 1px solid #1e293b;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    padding: 10px;
+}
+
+.input-group span {
+    margin-right: 10px;
+    font-size: 18px;
+}
+
+.input-group input {
+    border: none;
+    background: transparent;
+    outline: none;
+    color: white;
+    width: 100%;
+}
