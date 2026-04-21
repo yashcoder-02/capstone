@@ -1,7 +1,7 @@
 /* ================= BASE ================= */
 body {
     margin: 0;
-    font-family: 'Segoe UI', sans-serif;
+    font-family: 'Inter', sans-serif;
     background: linear-gradient(-45deg, #020617, #0f172a, #020617, #0f172a);
     background-size: 400% 400%;
     animation: gradientBG 12s ease infinite;
@@ -19,20 +19,115 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 15px 40px;
-    background: rgba(2, 6, 23, 0.8);
-    backdrop-filter: blur(12px);
+    padding: 15px 50px;
+    background: rgba(2, 6, 23, 0.85);
+    backdrop-filter: blur(15px);
     border-bottom: 1px solid #1e293b;
 }
 
-.navbar a {
-    margin-left: 20px;
+/* LEFT LOGO */
+.nav-left h2 {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 0;
+    font-weight: 600;
+}
+
+/* CENTER LINKS */
+.nav-center {
+    display: flex;
+    gap: 35px;
+}
+
+/* RIGHT SIDE */
+.nav-right {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+/* LINKS */
+.nav-link {
     text-decoration: none;
+    color: #94a3b8;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: 0.3s;
+}
+
+.nav-link:hover {
     color: #38bdf8;
 }
 
-.navbar a:hover {
-    color: #0ea5e9;
+.nav-link.active {
+    color: #38bdf8;
+}
+
+/* ICON STYLE */
+.nav-link i {
+    font-size: 14px;
+}
+
+/* LOGO ICON */
+.logo-icon {
+    color: #38bdf8;
+}
+
+/* ================= NOTIFICATION ================= */
+.notification {
+    position: relative;
+    cursor: pointer;
+}
+
+.badge {
+    position: absolute;
+    top: -6px;
+    right: -8px;
+    background: #8b5cf6;
+    font-size: 10px;
+    padding: 2px 6px;
+    border-radius: 50%;
+}
+
+/* ================= PROFILE ================= */
+.profile {
+    position: relative;
+    cursor: pointer;
+}
+
+/* DROPDOWN */
+.dropdown {
+    position: absolute;
+    top: 35px;
+    right: 0;
+    background: #020617;
+    border: 1px solid #1e293b;
+    border-radius: 8px;
+    display: none;
+    flex-direction: column;
+    min-width: 150px;
+    overflow: hidden;
+}
+
+.profile:hover .dropdown {
+    display: flex;
+}
+
+/* DROPDOWN LINKS */
+.dropdown a {
+    padding: 10px;
+    color: #cbd5f5;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.dropdown a:hover {
+    background: #1e293b;
 }
 
 /* ================= LAYOUT ================= */
@@ -40,7 +135,9 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 90vh;
+    min-height: 85vh;
+    flex-direction: column;
+    text-align: center;
 }
 
 /* ================= CARD ================= */
@@ -59,7 +156,12 @@ body {
 }
 
 /* ================= TEXT ================= */
-h1, h2 {
+h1 {
+    font-size: 40px;
+    font-weight: 700;
+}
+
+h2 {
     text-align: center;
 }
 
@@ -97,8 +199,8 @@ input:focus {
 /* ================= BUTTON ================= */
 button {
     width: 100%;
-    padding: 12px;
-    border-radius: 10px;
+    padding: 14px;
+    border-radius: 12px;
     border: none;
     background: linear-gradient(90deg, #3b82f6, #8b5cf6);
     color: white;
@@ -182,7 +284,7 @@ button:hover {
     100% { box-shadow: 0 0 5px #ef4444; }
 }
 
-/* ================= TERMINAL (HACKER UI) ================= */
+/* ================= TERMINAL ================= */
 .terminal-container {
     display: flex;
     justify-content: center;
@@ -231,14 +333,4 @@ button:hover {
 
 @keyframes blink {
     50% { opacity: 0; }
-}
-
-/* SCROLLBAR */
-.terminal::-webkit-scrollbar {
-    width: 6px;
-}
-
-.terminal::-webkit-scrollbar-thumb {
-    background: #22c55e;
-    border-radius: 10px;
 }

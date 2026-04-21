@@ -6,6 +6,7 @@
 
     <title>Memory Forensics Dashboard</title>
 
+    <!-- MAIN CSS -->
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 
     <!-- FONT -->
@@ -17,25 +18,31 @@
 </head>
 <body>
 
+<!-- ================= NAVBAR ================= -->
 <nav class="navbar">
 
-    <!-- LEFT -->
+    <!-- LEFT (LOGO) -->
     <div class="nav-left">
-        <h2><i class="fa-solid fa-brain"></i> Forensics</h2>
+        <h2>
+            <i class="fa-solid fa-brain logo-icon"></i>
+            Forensics
+        </h2>
     </div>
 
-    <!-- CENTER LINKS -->
+    <!-- CENTER -->
     <div class="nav-center">
         <a href="/" class="nav-link {% if request.path == '/' %}active{% endif %}">
-            <i class="fa-solid fa-upload"></i> Upload
+            <i class="fa-solid fa-upload"></i>
+            Upload
         </a>
 
         <a href="/dashboard" class="nav-link {% if request.path == '/dashboard' %}active{% endif %}">
-            <i class="fa-solid fa-chart-line"></i> Dashboard
+            <i class="fa-solid fa-chart-line"></i>
+            Dashboard
         </a>
     </div>
 
-    <!-- RIGHT SIDE -->
+    <!-- RIGHT -->
     <div class="nav-right">
 
         <!-- NOTIFICATION -->
@@ -44,14 +51,14 @@
             <span class="badge">3</span>
         </div>
 
-        <!-- PROFILE -->
+        <!-- PROFILE DROPDOWN -->
         <div class="profile">
             <i class="fa-solid fa-user"></i>
 
             <div class="dropdown">
-                <a href="#">Profile</a>
-                <a href="#">Settings</a>
-                <a href="#">Logout</a>
+                <a href="#"><i class="fa-solid fa-user"></i> Profile</a>
+                <a href="#"><i class="fa-solid fa-gear"></i> Settings</a>
+                <a href="#"><i class="fa-solid fa-right-from-bracket"></i> Logout</a>
             </div>
         </div>
 
@@ -59,6 +66,7 @@
 
 </nav>
 
+<!-- ================= MAIN CONTENT ================= -->
 <div class="main-wrapper">
     {% block content %}{% endblock %}
 </div>
