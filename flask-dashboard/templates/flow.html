@@ -1,0 +1,132 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="flow-container">
+
+    <!-- SLIDE 1 -->
+    <div class="slide active" id="slide1">
+        <h1>🧠 Memory Forensics System</h1>
+        <p>Automated malware detection from memory dumps</p>
+
+        <button onclick="nextSlide()">🚀 Get Started</button>
+    </div>
+
+    <!-- SLIDE 2 -->
+    <div class="slide" id="slide2">
+        <h2>User Information</h2>
+
+        <div class="form-section">
+            <input type="text" id="case_name" placeholder="Case Name" required>
+            <input type="text" id="user_name" placeholder="User Name" required>
+            <input type="text" id="case_id" placeholder="Case ID" required>
+            <input type="text" id="dump_hash" placeholder="Dump Hash" required>
+        </div>
+
+        <div class="flow-buttons">
+            <button onclick="prevSlide()">⬅ Back</button>
+            <button onclick="startProcessing()">Next ➡</button>
+        </div>
+    </div>
+
+    <!-- SLIDE 3 -->
+    <div class="slide" id="slide3">
+        <h2>⚙️ Processing...</h2>
+
+        <div class="progress-bar">
+            <div class="progress-fill" id="progress"></div>
+        </div>
+
+        <p id="status">Initializing...</p>
+    </div>
+
+    <!-- SLIDE 4 -->
+    <div class="slide" id="slide4">
+        <h2>📊 Analysis Complete</h2>
+        <p>Threat level evaluated successfully</p>
+
+        <div class="flow-buttons">
+            <button onclick="restart()">🔄 New Analysis</button>
+            <button onclick="goDashboard()">📊 View Dashboard</button>
+        </div>
+    </div>
+
+</div>
+
+<script>
+let current = 1;
+let isProcessing = false;
+
+// NEXT SLIDE
+function nextSlide() {
+    if (isProcessing) return;
+
+    document.getElementById("slide" + current).classList.remove("active");
+    current++;
+    document.getElementById("slide" + current).classList.add("active");
+}
+
+// PREVIOUS SLIDE
+function prevSlide() {
+    document.getElementById("slide" + current).classList.remove("active");
+    current--;
+    document.getElementById("slide" + current).classList.add("active");
+}
+
+// START PROCESS
+function startProcessing() {
+
+    // SIMPLE VALIDATION
+    let caseName = document.getElementById("case_name").value;
+    let userName = document.getElementById("user_name").value;
+
+    if (!caseName || !userName) {
+        alert("Please fill all required fields");
+        return;
+    }
+
+    nextSlide();
+    isProcessing = true;
+
+    let progress = 0;
+    let steps = [
+        "🔍 Process Scan...",
+        "🌐 Network Scan...",
+        "🧬 Malfind Detection...",
+        "📊 Correlation..."
+    ];
+
+    let i = 0;
+
+    let interval = setInterval(() => {
+        progress += 25;
+
+        document.getElementById("progress").style.width = progress + "%";
+        document.getElementById("status").innerText = steps[i];
+
+        i++;
+
+        if (progress >= 100) {
+            clearInterval(interval);
+
+            setTimeout(() => {
+                isProcessing = false;
+                nextSlide();
+            }, 1000);
+        }
+
+    }, 1000);
+}
+
+// GO DASHBOARD
+function goDashboard() {
+    window.location.href = "/dashboard";
+}
+
+// RESTART
+function restart() {
+    location.reload();
+}
+</script>
+
+{% endblock %}

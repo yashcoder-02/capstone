@@ -27,8 +27,20 @@ def calculate_severity(case_id, dump_hash):
         return "Low"
 
 
-# ------------------ Upload Route ------------------
-@app.route('/', methods=['GET', 'POST'])
+# ------------------ HOME (NOW FLOW PAGE) ------------------
+@app.route('/')
+def home():
+    return render_template('flow.html')   # 🔥 FIXED
+
+
+# ------------------ OPTIONAL: OLD LANDING ------------------
+@app.route('/landing')
+def landing():
+    return render_template('index.html')
+
+
+# ------------------ UPLOAD PAGE ------------------
+@app.route('/upload', methods=['GET', 'POST'])
 def upload():
     if request.method == 'POST':
         file = request.files['file']
@@ -71,19 +83,18 @@ def upload():
         with open(cases_file, "w") as f:
             json.dump(cases, f, indent=4)
 
-        # 🔥 Redirect to processing page instead of dashboard
         return redirect('/processing')
 
     return render_template('upload.html')
 
 
-# ------------------ Processing Route ------------------
+# ------------------ PROCESSING PAGE ------------------
 @app.route('/processing')
 def processing():
     return render_template('processing.html')
 
 
-# ------------------ Dashboard Route ------------------
+# ------------------ DASHBOARD ------------------
 @app.route('/dashboard')
 def dashboard():
     cases_file = os.path.join(BASE_DIR, "cases.json")
@@ -100,6 +111,6 @@ def dashboard():
     return render_template('dashboard.html', cases=cases)
 
 
-# ------------------ Run App ------------------
+# ------------------ RUN APP ------------------
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000)
