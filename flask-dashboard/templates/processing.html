@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="terminal-container">
+
+    <div class="terminal">
+
+        <div id="terminal-output"></div>
+        <div class="cursor"></div>
+
+    </div>
+
+</div>
+
+<script>
+const lines = [
+    "Initializing memory scan...",
+    "Loading forensic modules...",
+    "Running process scan...",
+    "Analyzing network connections...",
+    "Checking injected code...",
+    "⚠ Suspicious activity detected!",
+    "Correlating artifacts...",
+    "Generating report...",
+    "✔ Analysis Complete"
+];
+
+let i = 0;
+let j = 0;
+let output = document.getElementById("terminal-output");
+
+function typeLine() {
+    if (i < lines.length) {
+        if (j < lines[i].length) {
+            output.innerHTML += lines[i][j];
+            j++;
+            setTimeout(typeLine, 25);
+        } else {
+            output.innerHTML += "<br/>";
+            j = 0;
+            i++;
+            setTimeout(typeLine, 400);
+        }
+    } else {
+        setTimeout(() => {
+            window.location.href = "/dashboard";
+        }, 1200);
+    }
+}
+
+typeLine();
+</script>
+
+{% endblock %}

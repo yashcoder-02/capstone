@@ -7,31 +7,50 @@
     <!-- SLIDE 1 -->
     <div class="slide active" id="slide1">
         <h1>🧠 Memory Forensics System</h1>
-        <p>Automated malware detection from memory dumps</p>
+        <p class="subtitle">Advanced malware detection from memory dumps</p>
 
-        <button onclick="nextSlide()">🚀 Get Started</button>
+        <button class="primary-btn" onclick="nextSlide()">🚀 Get Started</button>
     </div>
 
     <!-- SLIDE 2 -->
     <div class="slide" id="slide2">
-        <h2>User Information</h2>
+        <h2>👤 User Information</h2>
+        <p class="subtitle">Enter case details for analysis</p>
 
         <div class="form-section">
-            <input type="text" id="case_name" placeholder="Case Name" required>
-            <input type="text" id="user_name" placeholder="User Name" required>
-            <input type="text" id="case_id" placeholder="Case ID" required>
-            <input type="text" id="dump_hash" placeholder="Dump Hash" required>
+
+            <div class="input-group">
+                <span>📁</span>
+                <input type="text" id="case_name" placeholder="Case Name" required>
+            </div>
+
+            <div class="input-group">
+                <span>👤</span>
+                <input type="text" id="user_name" placeholder="User Name" required>
+            </div>
+
+            <div class="input-group">
+                <span>🆔</span>
+                <input type="text" id="case_id" placeholder="Case ID" required>
+            </div>
+
+            <div class="input-group">
+                <span>🔐</span>
+                <input type="text" id="dump_hash" placeholder="Dump Hash" required>
+            </div>
+
         </div>
 
         <div class="flow-buttons">
-            <button onclick="prevSlide()">⬅ Back</button>
-            <button onclick="startProcessing()">Next ➡</button>
+            <button class="secondary-btn" onclick="prevSlide()">⬅ Back</button>
+            <button class="primary-btn" onclick="startProcessing()">Next ➡</button>
         </div>
     </div>
 
     <!-- SLIDE 3 -->
     <div class="slide" id="slide3">
-        <h2>⚙️ Processing...</h2>
+        <h2>⚙️ Processing</h2>
+        <p class="subtitle">Analyzing memory dump...</p>
 
         <div class="progress-bar">
             <div class="progress-fill" id="progress"></div>
@@ -43,11 +62,11 @@
     <!-- SLIDE 4 -->
     <div class="slide" id="slide4">
         <h2>📊 Analysis Complete</h2>
-        <p>Threat level evaluated successfully</p>
+        <p class="subtitle">Threat evaluation finished</p>
 
         <div class="flow-buttons">
-            <button onclick="restart()">🔄 New Analysis</button>
-            <button onclick="goDashboard()">📊 View Dashboard</button>
+            <button class="secondary-btn" onclick="restart()">🔄 New</button>
+            <button class="primary-btn" onclick="goDashboard()">📊 Dashboard</button>
         </div>
     </div>
 
@@ -57,7 +76,7 @@
 let current = 1;
 let isProcessing = false;
 
-// NEXT SLIDE
+// NEXT
 function nextSlide() {
     if (isProcessing) return;
 
@@ -66,22 +85,23 @@ function nextSlide() {
     document.getElementById("slide" + current).classList.add("active");
 }
 
-// PREVIOUS SLIDE
+// PREVIOUS
 function prevSlide() {
     document.getElementById("slide" + current).classList.remove("active");
     current--;
     document.getElementById("slide" + current).classList.add("active");
 }
 
-// START PROCESS
+// PROCESS
 function startProcessing() {
 
-    // SIMPLE VALIDATION
     let caseName = document.getElementById("case_name").value;
     let userName = document.getElementById("user_name").value;
+    let caseId = document.getElementById("case_id").value;
+    let dumpHash = document.getElementById("dump_hash").value;
 
-    if (!caseName || !userName) {
-        alert("Please fill all required fields");
+    if (!caseName || !userName || !caseId || !dumpHash) {
+        alert("Please fill all fields");
         return;
     }
 
@@ -90,10 +110,10 @@ function startProcessing() {
 
     let progress = 0;
     let steps = [
-        "🔍 Process Scan...",
-        "🌐 Network Scan...",
-        "🧬 Malfind Detection...",
-        "📊 Correlation..."
+        "🔍 Scanning processes...",
+        "🌐 Analyzing network...",
+        "🧬 Detecting malware...",
+        "📊 Correlating data..."
     ];
 
     let i = 0;
@@ -112,18 +132,18 @@ function startProcessing() {
             setTimeout(() => {
                 isProcessing = false;
                 nextSlide();
-            }, 1000);
+            }, 800);
         }
 
-    }, 1000);
+    }, 900);
 }
 
-// GO DASHBOARD
+// DASHBOARD
 function goDashboard() {
     window.location.href = "/dashboard";
 }
 
-// RESTART
+// RESET
 function restart() {
     location.reload();
 }

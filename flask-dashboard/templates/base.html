@@ -1,17 +1,62 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Forensics Dashboard</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Memory Forensics Dashboard</title>
+
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+    <!-- FONT -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+    <!-- ICONS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
 </head>
 <body>
 
 <nav class="navbar">
-    <h2>🧠 Forensics Dashboard</h2>
-    <div>
-        <a href="/">Upload</a>
-        <a href="/dashboard">Dashboard</a>
+
+    <!-- LEFT -->
+    <div class="nav-left">
+        <h2><i class="fa-solid fa-brain"></i> Forensics</h2>
     </div>
+
+    <!-- CENTER LINKS -->
+    <div class="nav-center">
+        <a href="/" class="nav-link {% if request.path == '/' %}active{% endif %}">
+            <i class="fa-solid fa-upload"></i> Upload
+        </a>
+
+        <a href="/dashboard" class="nav-link {% if request.path == '/dashboard' %}active{% endif %}">
+            <i class="fa-solid fa-chart-line"></i> Dashboard
+        </a>
+    </div>
+
+    <!-- RIGHT SIDE -->
+    <div class="nav-right">
+
+        <!-- NOTIFICATION -->
+        <div class="notification">
+            <i class="fa-solid fa-bell"></i>
+            <span class="badge">3</span>
+        </div>
+
+        <!-- PROFILE -->
+        <div class="profile">
+            <i class="fa-solid fa-user"></i>
+
+            <div class="dropdown">
+                <a href="#">Profile</a>
+                <a href="#">Settings</a>
+                <a href="#">Logout</a>
+            </div>
+        </div>
+
+    </div>
+
 </nav>
 
 <div class="main-wrapper">
