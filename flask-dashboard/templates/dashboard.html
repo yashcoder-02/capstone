@@ -2,42 +2,43 @@
 
 {% block content %}
 
-<div class="dashboard-container">
+<div style="width: 700px;">
 
-    <h2 class="dashboard-title">🧠 Threat Analysis Dashboard</h2>
+    <h1>📊 Case Dashboard</h1>
 
-    {% if cases %}
-        {% for case in cases %}
-
-        <!-- 🔴 HIGH THREAT ALERT -->
-        {% if case.severity == "High" %}
-        <div class="alert high-alert">
-            🚨 HIGH THREAT DETECTED
-        </div>
-        {% endif %}
-
-        <div class="card animate-card {{ case.severity|lower }}-card">
-
-            <h3>{{ case.case_name }}</h3>
-
-            <p>👤 {{ case.user_name }}</p>
-            <p>🆔 {{ case.case_id }}</p>
-            <p>🔐 {{ case.dump_hash }}</p>
-            <p>📁 {{ case.filename }}</p>
-
-            <p>
-              Severity:
-              <span class="badge {{ case.severity|lower }}">
-                {{ case.severity }}
-              </span>
-            </p>
-
-        </div>
-
-        {% endfor %}
-    {% else %}
-        <p>No cases yet</p>
+    {% if cases|length == 0 %}
+        <p>No cases yet. Upload a memory dump to start analysis.</p>
     {% endif %}
+
+    {% for case in cases %}
+
+    <div class="card 
+        {% if case.severity == 'High' %}high-card{% endif %}
+        {% if case.severity == 'Medium' %}medium-card{% endif %}
+        {% if case.severity == 'Low' %}low-card{% endif %}">
+
+        <!-- 🔥 SEVERITY BADGE -->
+        <div style="font-size: 18px; font-weight: bold; margin-bottom: 10px;">
+            Threat Level: 
+            {% if case.severity == "High" %}
+                <span style="color:#ef4444;">🔴 HIGH</span>
+            {% elif case.severity == "Medium" %}
+                <span style="color:#f59e0b;">🟡 MEDIUM</span>
+            {% else %}
+                <span style="color:#22c55e;">🟢 LOW</span>
+            {% endif %}
+        </div>
+
+        <!-- CASE DETAILS -->
+        <p><b>📁 File:</b> {{ case.filename }}</p>
+        <p><b>👤 User:</b> {{ case.user_name }}</p>
+        <p><b>🆔 Case ID:</b> {{ case.case_id }}</p>
+        <p><b>🔐 Dump Hash:</b> {{ case.dump_hash }}</p>
+        <p><b>📅 Time:</b> {{ case.timestamp }}</p>
+
+    </div>
+
+    {% endfor %}
 
 </div>
 

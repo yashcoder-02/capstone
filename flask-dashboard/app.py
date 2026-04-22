@@ -1,5 +1,6 @@
 import os
 import json
+from datetime import datetime   # ✅ ADDED
 from flask import Flask, render_template, request, redirect
 
 app = Flask(__name__)
@@ -30,7 +31,7 @@ def calculate_severity(case_id, dump_hash):
 # ------------------ HOME (NOW FLOW PAGE) ------------------
 @app.route('/')
 def home():
-    return render_template('flow.html')   # 🔥 FIXED
+    return render_template('flow.html')
 
 
 # ------------------ OPTIONAL: OLD LANDING ------------------
@@ -51,6 +52,9 @@ def upload():
         # Calculate severity
         severity = calculate_severity(case_id, dump_hash)
 
+        # ✅ ADD TIMESTAMP
+        timestamp = datetime.now().strftime("%d %b %Y, %H:%M")
+
         # Case data
         case_data = {
             "case_name": request.form.get('case_name'),
@@ -58,7 +62,8 @@ def upload():
             "case_id": case_id,
             "dump_hash": dump_hash,
             "filename": file.filename if file else "",
-            "severity": severity
+            "severity": severity,
+            "timestamp": timestamp   # ✅ ADDED
         }
 
         # Save file
