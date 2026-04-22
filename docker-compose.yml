@@ -1,0 +1,64 @@
+version: '3.8'
+
+services:
+  flask:
+    build: ./flask_app
+    container_name: memsuite_flask
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./volumes/dumps:/app/dumps
+      - ./volumes/reports:/app/reports
+      - ./volumes/db:/app/db
+    networks:
+      - memsuite_net
+    depends_on:
+      - vol2
+      - vol3
+    environment:
+      - DUMP_FOLDER=/app/dumps
+      - REPORT_FOLDER=/app/reports
+      - DB_PATH=/app/db/memsuite.db
+      - JENKINS_TOKEN=${JENKINS_TOKEN:-}
+
+  vol2:
+    build: ./volatility2
+    container_name: memsuite_vol2
+    volumes:
+      - ./volumes/dumps:/app/dumps:ro
+      - ./volumes/reports:/app/reports
+    networks:
+      - memsuite_net
+    command: ["tail", "-f", "/dev/null"]
+
+  vol3:
+    build: ./volatility3
+    container_name: memsuite_vol3
+    volumes:
+      - ./volumes/dumps:/app/dumps:ro
+      - ./volumes/reports:/app/reports
+    networks:
+      - memsuite_net
+    command: ["tail", "-f", "/dev/null"]
+
+  jenkins:
+    build: ./jenkins
+    container_name: memsuite_jenkins
+    ports:
+      - "8080:8080"
+      - "50000:50000"
+    volumes:
+      - ./volumes/dumps:/app/dumps:ro
+      - ./volumes/reports:/app/reports
+      - ./volumes/jenkins_home:/var/jenkins_home
+      - /var/run/docker.sock:/var/run/docker.sock
+    networks:
+      - memsuite_net
+    environment:
+      - JENKINS_ADMIN_PASSWORD=${JENKINS_ADMIN_PASSWORD:-admin}
+      # Your GitHub repo URL — Jenkins will pull the Jenkinsfile from here
+      - MEMSUITE_REPO_URL=${MEMSUITE_REPO_URL:-https://github.com/your-username/memsuite}
+
+networks:
+  memsuite_net:
+    driver: bridge
