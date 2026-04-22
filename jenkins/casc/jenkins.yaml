@@ -1,0 +1,62 @@
+# Jenkins Configuration as Code
+# This file fully configures Jenkins on first boot — no UI setup needed.
+
+jenkins:
+  systemMessage: "MemSuite Forensic Analysis Platform — auto-configured"
+  numExecutors: 4
+  mode: NORMAL
+
+  securityRealm:
+    local:
+      allowsSignup: false
+      users:
+        - id: "admin"
+          password: "${JENKINS_ADMIN_PASSWORD}"
+
+  authorizationStrategy:
+    loggedInUsersCanDoAnything:
+      allowAnonymousRead: false
+
+  # Disable CSRF for API calls from Flask (internal network only, safe here)
+  crumbIssuer: ~
+
+unclassified:
+  location:
+    url: "http://memsuite_jenkins:8080/"
+
+jobs:
+  - script: >
+      pipelineJob('memsuite-analysis') {
+        description('MemSuite memory forensics analysis pipeline')
+        keepDependencies(false)
+
+        parameters {
+          stringParam('DUMP_ID',     '',     'Case dump UUID from the Flask database')
+          stringParam('DUMP_FILE',   '',     'Stored filename of the memory dump')
+          stringParam('VOL_VERSION', 'auto', 'vol2 | vol3 | auto')
+        }
+
+        definition {
+          cpsScm {
+            scm {
+              git {
+                remote {
+                  url("${MEMSUITE_REPO_URL}")
+                }
+                branch('*/main')
+                extensions {
+                  cleanBeforeCheckout()
+                }
+              }
+            }
+            scriptPath('Jenkinsfile')
+            lightweight(true)
+          }
+        }
+
+        triggers {}
+
+        properties {
+          disableConcurrentBuilds()
+        }
+      }
